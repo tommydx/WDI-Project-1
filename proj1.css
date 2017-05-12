@@ -1,0 +1,89 @@
+body {
+
+}
+/* USE "POSITION RELATIVE" AND "POSITION ABSOLUTE"
+   TO POSITION THE BUTTON DIVS */
+
+
+.flex-container {
+  display: flex;
+  background-image: url("images/bg1.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.numpad {
+  display: flex;
+  flex-direction: column;
+  height: 800px;
+  width: 450px;
+  margin-top: 100px;
+  margin-left: 125px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.sidebar {
+  margin-left: auto;
+  margin-top: 120px;
+  height: 600px;
+  width: 250px;
+  background-color: blue;
+  opacity: 0.87;
+  margin-right: 100px;
+  border: black 10px solid;
+  border-width: thick;
+}
+
+.num {
+  width: 90px;
+  height: 90px;
+  border: solid 1px #666;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 66px;
+  color: #40F;
+  font-size: 66px;
+  font-style: oblique;
+  font-weight: bold;
+}
+
+#display {
+  height: 100px;
+  width: 100%;
+  border: black 10px solid;
+  border-width: thick;
+  background-color: blue;
+  opacity: 0.7;
+  color: black;
+  font-size: 100px;
+
+}
+
+#timer {
+  position: relative;
+  border-style: solid;
+  border-width: thick;
+  height: 100px;
+  width: 100%;
+  color: black;
+  font-size: 50px;
+}
+
+#unlocked {
+  color: #F06;
+  font-size: 20px;
+  font-weight: bolder;
+  text-decoration: underline;
+}
+/*
+@font-face {
+  font-family:
+  src: url();
+}
+*/

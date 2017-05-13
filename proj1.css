@@ -53,6 +53,23 @@ body {
   font-weight: bold;
 }
 
+.start {
+  margin-top: 400px;
+  margin-left: 100px;
+  height: 100px;
+  width: 100px;
+  border: solid 1px #666;
+  border-radius: 75%;
+  text-align: center;
+  line-height: 66px;
+  color: #40F;
+  font-size: 30px;
+  font-style: oblique;
+  font-weight: bold;
+  background-color: #604;
+  opacity: 0.87;
+}
+
 #display {
   height: 100px;
   width: 100%;

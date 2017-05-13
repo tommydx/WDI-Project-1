@@ -4,6 +4,7 @@ $(document).ready(function() {
   var codes = ["00", "66", "07", "17", "91", "19", "21", "50", "09", "77"];
   var unlockedCodes = [];
   var $unlocked = $("#unlocked");
+  var $start = $(".start")
 
   var $num = $(".num")
   var $display = $("#display");
@@ -55,43 +56,53 @@ $(document).ready(function() {
       var number = $("#zero").text();
       $("#display").text(number);
     }
-
+    // POSSIBLY MAKE A FUNCTION TO CALL THE CODE FOR THE CLICK EVENTS
   });
 
   var numbersSelected = 0;
   var codeGreen;
-
-  $num.on("click", function() {
-    numbersSelected++;
+  //START THE TIMER
+  $start.on("click", function() {
+    var timed = false;
     startTimer();
 
-    // CONTROL ALERT AFTER LOOP
-    var found = false;
+    $num.on("click", function() {
+      numbersSelected++;
 
-    if (numbersSelected <= 2) {
-      var number = $(this).text();
-      $("#display").append(number);
-    } else {
-      codeGreen = $("#display").text();
-      for (var i = 0; i < codes.length; i++) {
-        if (codeGreen === codes[i]) {
-          var $li = $("<li>").text(codeGreen);
-          unlockedCodes.push(codeGreen);
-          $unlocked.append($li);
-          found = true
+      // CONTROL ALERT AFTER LOOP
+      var found = false;
+
+      if (numbersSelected <= 2) {
+        var number = $(this).text();
+        $("#display").append(number);
+      } else {
+        codeGreen = $("#display").text();
+        for (var i = 0; i < codes.length; i++) {
+          if (codeGreen === codes[i]) {
+            var $li = $("<li>").text(codeGreen);
+            unlockedCodes.push(codeGreen);
+            $unlocked.append($li);
+            found = true;
+          }
+          $display.text("");
+          numbersSelected = 0;
         }
-        $display.text("");
-        numbersSelected = 0;
+        // ALERT USER CODE NOT FOUND
+        if (!found) {
+          alert("Time is running out.");
+        }
       }
-      // ALERT USER CODE NOT FOUND
-      if (!found) {
-        alert("Time is running out.");
-      }
-    }
+    });
 
+    if (!timed) {
+      $(this).off();
+
+      //
+    //  alert("Nuclear war broke out because you didn't guess the codes. FAIL")
+    }
   });
 
-  function startTimer() {
+  var startTimer = function() {
     // SET TIMER FOR 5 MINUTES ( 300K MILLISECONDS)
     var endTime = 300000;
 
@@ -101,12 +112,13 @@ $(document).ready(function() {
 
       console.log(endTime);
 
-      if (endTime > 0) {
-        $timer.text(endTime);
-
-        var minutes = endTime / 6000;
-        var seconds = endTime % 60;
-        endTime = "0" + minutes + ":" + seconds;
+      if (endTime >= 0) {
+        // SET VARIABLES TO CONVERT MILLISECONDS TO MINUTES : SECONDS
+        var minutes = Math.floor(endTime / 60000);
+        var seconds = Math.floor((endTime % 60000) / 1000).toFixed(0);
+        // BORROWED FROM HERE FOR THE SECONDS TERNARY - http://stackoverflow.com/questions/21294302/converting-milliseconds-to-minutes-and-seconds-with-javascript
+        var final = "0" + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+        $timer.text(final);
       }
 
     }, 1000);

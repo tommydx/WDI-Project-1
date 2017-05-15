@@ -10,57 +10,16 @@ $(document).ready(function() {
   var $display = $("#display");
   var $timer = $("#timer")
 
-  var $one = $("#one");
-  var $two = $("#two");
-  var $three = $("#three");
-  var $four = $("#four");
-  var $five = $("#five");
-  var $six = $("#six");
-  var $seven = $("#seven");
-  var $eight = $("#eight");
-  var $nine = $("#nine");
-  var $zero = $("#zero");
-
   var time = "05:00.00";
   var startTime = null;
 
-  $(document).on("keypress", function(event) {
-    if (event.which === 49) {
-      var number = $("#one").text();
-      $("#display").text(number);
-    } else if (event.which === 50){
-      var number = $("#two").text();
-      $("#display").text(number);
-    } else if (event.which === 51) {
-      var number = $("#three").text();
-      $("#display").text(number);
-    } else if (event.which === 52) {
-      var number = $("#four").text();
-      $("#display").text(number);
-    } else if (event.which === 53) {
-      var number = $("#five").text();
-      $("#display").text(number);
-    } else if (event.which === 54) {
-      var number = $("#six").text();
-      $("#display").text(number);
-    } else if (event.which === 55) {
-      var number = $("#seven").text();
-      $("#display").text(number);
-    } else if (event.which === 56) {
-      var number = $("#eight").text();
-      $("#display").text(number);
-    } else if (event.which === 57) {
-      var number = $("#nine").text();
-      $("#display").text(number);
-    } else if (event.which === 48) {
-      var number = $("#zero").text();
-      $("#display").text(number);
-    }
-    // POSSIBLY MAKE A FUNCTION TO CALL THE CODE FOR THE CLICK EVENTS
-  });
-
   var numbersSelected = 0;
   var codeGreen;
+  var endTime;
+
+  var programEnd = false;
+
+
   //START THE TIMER
   $start.on("click", function() {
     var timed = false;
@@ -71,46 +30,63 @@ $(document).ready(function() {
 
       // CONTROL ALERT AFTER LOOP
       var found = false;
-
+      // IF VARIBLE numbersSelected IS LESS THAN 2
+      // DISPLAY THE NUMBERS THE USER CLICKS
       if (numbersSelected <= 2) {
         var number = $(this).text();
         $("#display").append(number);
       } else {
-        codeGreen = $("#display").text();
-        for (var i = 0; i < codes.length; i++) {
-          if (codeGreen === codes[i]) {
-            var $li = $("<li>").text(codeGreen);
-            unlockedCodes.push(codeGreen);
-            $unlocked.append($li);
-            found = true;
+          codeGreen = $("#display").text();
+          // CHECK codeGreen AGAINST THE codes ARRAY TO SEE IF
+          // THE USER'S INPUT IS A HIDDEN CODE
+          for (var i = 0; i < codes.length; i++) {
+            if (codeGreen === codes[i]) {
+              var li = $("<li>").text(codeGreen);
+              unlockedCodes.push(codeGreen);
+              $unlocked.append(li);
+              found = true;
+            }
           }
+          // RESET USER INPUT DISPLAY
           $display.text("");
           numbersSelected = 0;
-        }
-        // ALERT USER CODE NOT FOUND
-        if (!found) {
-          alert("Time is running out.");
-        }
-      }
-    });
 
+          // ALERT USER CODE NOT FOUND
+          if (!found) {
+            alert("Time is running out.");
+          }
+        }
+        // SORT THE ARRAYS AND CHECK THAT THEY ARE EQUAL TO
+        // ALERT USER THEY WON
+        if (codes.length === unlockedCodes.length) {
+          codes.sort();
+          unlockedCodes.sort();
+          for (var i = 0; i < unlockedCodes.length; i++) {
+            if (codes[i] === unlockedCodes[i]) {
+              programEnd = true;
+            }
+          }
+          alert("Take a breath, it's over.");
+          clearInterval(endTime);
+        }
+
+    });
+    // KILL THIS FUNCTION IF TIMER IS NOT RUNNING
     if (!timed) {
       $(this).off();
-
-      //
-    //  alert("Nuclear war broke out because you didn't guess the codes. FAIL")
     }
   });
 
   var startTimer = function() {
     // SET TIMER FOR 5 MINUTES ( 300K MILLISECONDS)
-    var endTime = 300000;
+    endTime = 300000;
 
     setInterval(function() {
       // DECREMENT TIMER BY 1 SECOND
-      endTime -= 1000;
-
-      console.log(endTime);
+      if (programEnd === false) {
+        endTime -= 1000;
+        console.log(endTime);
+      }
 
       if (endTime >= 0) {
         // SET VARIABLES TO CONVERT MILLISECONDS TO MINUTES : SECONDS
@@ -120,84 +96,17 @@ $(document).ready(function() {
         var final = "0" + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
         $timer.text(final);
       }
-
+      // ATTEMPT TO STOP THE TIMER AND SET TO 00:00 OR CLEAR THE TIMER FIELD
+      if (endTime <= 0) {
+        alert("You failed to unlock the codes. The world ended.");
+        clearInterval(endTime);
+        programEnd = true;
+      }
     }, 1000);
+
   }
 
 });
-
-
-// WAS ATTEMPTING A TIMER BELOW
-
-// $timer.on("click", function() {
-//   var minutes = "0";
-//   var seconds = "0";
-//   var timer = minutes, seconds;
-//   setInterval(function() {
-//     minutes = parseInt(timer / 60, 10);
-//     seconds = parseInt(timer % 60, 10);
-//
-//     minutes = minutes < 10 ? "0" + minutes : minutes;
-//     if (minutes < 10) {
-//       minutes = "0" + minutes;
-//     } else {
-//       minutes = minutes;
-//     }
-//     seconds = seconds < 10 ? "0" + seconds : seconds;
-//     if (seconds < 10) {
-//       seconds = "0" + seconds;
-//     } else {
-//       seconds = seconds;
-//     }
-//
-//     $timer.text(minutes + ":" + seconds)
-//   });
-// });
-
-
-
-// GOT SOME HELP AND WAS ABLE TO GET RID OF THE CODE BELOW
-// WHERE ONLY "ONE" WORKED ON THE CLICK
-// $num.on("click", function() {
-//   console.log("clicked");
-//   if ($one.on("click", function() {
-//     var number = $("#one").text();
-//     $("#display").text(number);
-//   })); else if ($two.on("click", function() {
-//         var number = $("#two").text();
-//         $("#display").text(number);
-//   })); else if ($three.on("click", function() {
-//         var number = $("#three").text();
-//         $("#display").text(number);
-//   })); else if ($four.on("click", function() {
-//         var number = $("#four").text();
-//         $("#display").text(number);
-//   })); else if ($five.on("click", function() {
-//         var number = $("#five").text();
-//         $("#display").text(number);
-//   })); else if ($six.on("click", function() {
-//         var number = $("#six").text();
-//         $("#display").text(number);
-//   })); else if ($seven.on("click", function() {
-//         var number = $("#seven").text();
-//         $("#display").text(number);
-//   })); else if ($eight.on("click", function() {
-//         var number = $("#eight").text();
-//         $("#display").text(number);
-//   })); else if ($nine.on("click", function() {
-//         var number = $("#nine").text();
-//         $("#display").text(number);
-//   })); else if ($zero.on("click", function() {
-//         var number = $("#zero").text();
-//         $("#display").text(number);
-//   }));
-// });
-
-
-
-
-
-
 
 
 

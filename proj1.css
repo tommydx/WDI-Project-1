@@ -11,7 +11,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
 }
-
+/* KEYPAD DISPLAY */
 .numpad {
   display: flex;
   flex-direction: column;
@@ -20,7 +20,7 @@ body {
   margin-top: 100px;
   margin-left: 125px;
 }
-
+/* ROW AND COLUMN SEPARATIONS FOR NUMBER BUTTONS AND INPUT */
 .row {
   display: flex;
   justify-content: space-around;
@@ -39,7 +39,7 @@ body {
   border: black 10px solid;
   border-width: thick;
 }
-
+/* CLASS FOR NUMBER BUTTONS */
 .num {
   width: 90px;
   height: 90px;
@@ -52,24 +52,21 @@ body {
   font-style: oblique;
   font-weight: bold;
 }
-
+/* START BUTTON */
 .start {
   margin-top: 400px;
-  margin-left: 100px;
-  height: 100px;
-  width: 100px;
-  border: solid 1px #666;
-  border-radius: 75%;
+  margin-left: 80px;
+  height: 40px;
+  width: 80px;
   text-align: center;
   line-height: 66px;
   color: #40F;
   font-size: 30px;
   font-style: oblique;
   font-weight: bold;
-  background-color: #604;
   opacity: 0.87;
 }
-
+/* DISPLAY FIELD FOR USER INPUT */
 #display {
   height: 100px;
   width: 100%;
@@ -81,7 +78,7 @@ body {
   font-size: 100px;
 
 }
-
+/* DISPLAY FIELD FOR COUNTDOWN TIMER */
 #timer {
   position: relative;
   border-style: solid;
@@ -91,7 +88,7 @@ body {
   color: black;
   font-size: 50px;
 }
-
+/* DISPLAY FIELD FOR UNLOCKED CODES */
 #unlocked {
   color: #F06;
   font-size: 20px;
